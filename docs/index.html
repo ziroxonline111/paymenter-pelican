@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pelican Panel for Paymenter: free server extension for game server hosting</title>
+<meta name="description" content="Free Paymenter server extension for Pelican Panel. Creates, suspends, upgrades and deletes game servers in Pelican when orders are paid. Eggs and egg variables from Pelican, node tags, ports, a Go to server button.">
+<link rel="canonical" href="https://ziroxonline111.github.io/paymenter-pelican/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ziroxonline111.github.io/paymenter-pelican/">
+<meta property="og:title" content="Pelican Panel for Paymenter">
+<meta property="og:description" content="Sell game servers on Pelican Panel with Paymenter. Free, open source (MIT) server extension.">
+<meta property="og:image" content="https://ziroxonline111.github.io/paymenter-pelican/social.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pelican Panel for Paymenter">
+<meta name="twitter:description" content="Sell game servers on Pelican Panel with Paymenter. Free, open source (MIT) server extension.">
+<meta name="twitter:image" content="https://ziroxonline111.github.io/paymenter-pelican/social.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Pelican Panel for Paymenter",
+      "description": "A Paymenter server extension for Pelican Panel: creates the game server in Pelican when an order is paid, and suspends, unsuspends, upgrades and deletes it with Paymenter's own jobs. Customers get a Go to server button.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Linux",
+      "softwareVersion": "1.0.0",
+      "license": "https://opensource.org/licenses/MIT",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+      "downloadUrl": "https://github.com/ziroxonline111/paymenter-pelican/releases/latest",
+      "codeRepository": "https://github.com/ziroxonline111/paymenter-pelican",
+      "screenshot": "https://ziroxonline111.github.io/paymenter-pelican/paymenter-product-pelican-eggs.png",
+      "sameAs": [
+        "https://karelialabs.gumroad.com/l/pelican-paymenter",
+        "https://www.sourcexchange.net/products/pelican-panel-for-paymenter",
+        "https://karelialabs.com/tools/pelican-panel-for-paymenter"
+      ],
+      "author": {"@type": "Organization", "name": "Karelia Labs", "url": "https://karelialabs.com"}
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "Does the customer get a Pelican password?",
+         "acceptedAnswer": {"@type": "Answer", "text": "If the account is new, Pelican emails a link to set one (Pelican needs working mail settings). Existing accounts with the same email address are used as they are."}},
+        {"@type": "Question", "name": "Why does Go to server show 404 in Pelican?",
+         "acceptedAnswer": {"@type": "Answer", "text": "The browser is signed in to Pelican as someone who does not own the server; Pelican answers 404 for other users' servers. Sign out or sign in as the customer."}},
+        {"@type": "Question", "name": "Can customers choose the memory or a game version?",
+         "acceptedAnswer": {"@type": "Answer", "text": "Yes, with Paymenter config options whose environment variable is memory (or another product setting) or the egg variable's name, such as MINECRAFT_VERSION."}},
+        {"@type": "Question", "name": "Does it reinstall a server on upgrade?",
+         "acceptedAnswer": {"@type": "Answer", "text": "No. It changes the resources of the same server. A product with another egg moves the server to that egg; Pelican does not reinstall it by itself."}},
+        {"@type": "Question", "name": "Does it work with Pterodactyl?",
+         "acceptedAnswer": {"@type": "Answer", "text": "Use Paymenter's Pterodactyl extension for Pterodactyl 1.x. This one is for Pelican."}}
+      ]
+    }
+  ]
+}
+</script>
+<style>
+  :root { --bg: #0d1521; --panel: #142233; --text: #e7edf4; --muted: #94a3b8; --accent: #2dd4bf; --code: #0a111b; --border: #23364b; --on-accent: #062521; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg: #f7fafc; --panel: #ffffff; --text: #0f172a; --muted: #475569; --accent: #0f766e; --code: #eef2f6; --border: #dbe3ec; --on-accent: #ffffff; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Inter, sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 48px 16px 80px; }
+  h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.15; margin: 8px 0 16px; }
+  h2 { margin-top: 48px; font-size: 26px; line-height: 1.25; }
+  .eyebrow { color: var(--accent); font-weight: 700; letter-spacing: .02em; }
+  .lead { font-size: 20px; color: var(--muted); }
+  pre, code { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; }
+  pre { background: var(--code); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; overflow-x: auto; font-size: 14px; }
+  code { background: var(--code); padding: 2px 6px; border-radius: 6px; font-size: .92em; overflow-wrap: anywhere; }
+  pre code { background: none; padding: 0; overflow-wrap: normal; }
+  .buttons { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0; }
+  .button { display: inline-block; padding: 12px 20px; border-radius: 10px; font-weight: 700; text-decoration: none; }
+  .primary { background: var(--accent); color: var(--on-accent); }
+  .secondary { border: 1px solid var(--border); color: var(--text); }
+  img { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border); }
+  figure { margin: 24px 0; }
+  figcaption { color: var(--muted); font-size: 15px; margin-top: 8px; }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 20px 24px; margin: 16px 0; }
+  .card ul { padding-left: 20px; margin: 0; }
+  .table { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  a { color: var(--accent); }
+  .small { color: var(--muted); font-size: 15px; }
+  footer { margin-top: 64px; color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">Free and open source · MIT</div>
+  <h1>Pelican Panel for Paymenter</h1>
+  <p class="lead">Sell game servers on Pelican Panel with Paymenter. When an order is paid, Paymenter creates the server in Pelican, and suspends, unsuspends, upgrades and deletes it with its own jobs. Customers get a <strong>Go to server</strong> button.</p>
+  <div class="buttons">
+    <a class="button primary" href="https://github.com/ziroxonline111/paymenter-pelican/releases/latest">Download</a>
+    <a class="button secondary" href="https://www.sourcexchange.net/products/pelican-panel-for-paymenter">Get it on SourceXchange</a>
+    <a class="button secondary" href="https://github.com/ziroxonline111/paymenter-pelican">Source on GitHub</a>
+  </div>
+  <p class="small">Tested with Paymenter 1.5.9 and Pelican Panel v1.0.0-rc.2. The same release zip is also on <a href="https://karelialabs.gumroad.com/l/pelican-paymenter">Gumroad</a>.</p>
+  <figure>
+    <img src="paymenter-product-pelican-eggs.png" alt="Paymenter product page, Server tab: egg tag, egg, Docker image, egg variables and node tags read from Pelican" width="1090" height="785">
+    <figcaption>Eggs, images and egg variables straight from Pelican.</figcaption>
+  </figure>
+
+  <h2>Why Paymenter's Pterodactyl extension does not work with Pelican</h2>
+  <p>Paymenter ships extensions for Pterodactyl, Convoy, Virtfusion and others, but none for Pelican: not in Paymenter 1.5.9 and not in its development branch (checked on 25 October 2026). Pelican started as a fork of Pterodactyl, but its Application API has changed. Paymenter's Pterodactyl extension reads nests and locations, and Pelican answers with:</p>
+  <pre><code>The route api/application/nests could not be found.</code></pre>
+  <p>This extension starts from Paymenter's own (MIT) Pterodactyl extension and follows Pelican's current Application API where it differs.</p>
+
+  <h2>What it does</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Creates the server when an order is paid</strong>, with the product's egg, Docker image, egg variables, memory, swap, disk, CPU, IO weight, CPU pinning, and database, backup and port limits.</li>
+      <li><strong>Eggs straight from Pelican.</strong> Pelican has no nests: the product page lists every egg, narrows the list by egg tag, and shows the egg's Docker images and one field per egg variable.</li>
+      <li><strong>Node tags or a fixed node.</strong> Pelican has no locations: a product can use any node with one of its node tags, or always the same node.</li>
+      <li><strong>Every server gets a port.</strong> Pelican's own automatic deployment only assigns a port when a port range is sent, so the extension picks the node and the port itself. Port ranges, port arrays (for example a query port written to its egg variable) and dedicated IP addresses are supported.</li>
+      <li><strong>The right customer account.</strong> Pelican's email filter also matches parts of addresses, so the extension reads every page of matches and takes the account with exactly the customer's address. Without one it creates an account, and Pelican emails a link to set the password.</li>
+      <li><strong>Suspend, unsuspend, upgrade and terminate</strong> from Paymenter's jobs and from the admin's Trigger Extension Action. Upgrades change the same server and keep its egg variables.</li>
+      <li><strong>Test Connection</strong> checks the URL, the key and every read permission, and names the missing one.</li>
+      <li><strong>Clear errors</strong> with the HTTP status, the request, Pelican's reason and what to change.</li>
+    </ul>
+  </div>
+  <figure>
+    <img src="paymenter-go-to-server.png" alt="Paymenter service page with the Upgrade and Go to server buttons" width="1440" height="380" loading="lazy">
+    <figcaption>Go to server opens the customer's server in Pelican.</figcaption>
+  </figure>
+
+  <h2>Install</h2>
+  <ol>
+    <li>Download <code>paymenter-pelican-1.0.0.zip</code> from the <a href="https://github.com/ziroxonline111/paymenter-pelican/releases/latest">latest release</a>.</li>
+    <li>In Paymenter: <strong>Admin → Extensions → Available Extensions → Upload Extension</strong>, and upload the zip ("Server uploaded successfully"). Or copy the <code>PelicanPanel</code> folder to <code>extensions/Servers/</code>.</li>
+    <li>In Pelican: <strong>Admin → Advanced → API Keys → +</strong>. Set <strong>Server</strong> and <strong>User</strong> to Read &amp; Write, <strong>Node</strong>, <strong>Allocation</strong> and <strong>Egg</strong> to Read, everything else to None, and create the key.</li>
+    <li>In Paymenter: <strong>Admin → Servers → Create</strong>, Server <strong>PelicanPanel</strong>, enter the Pelican URL and the key, and click <strong>Test Connection</strong>.</li>
+    <li>On each product: <strong>Server</strong> tab → the Pelican server, then the egg, the node tags (or a node) and the resources.</li>
+  </ol>
+  <figure>
+    <img src="pelican-api-key-permissions.png" alt="Pelican's Create Application API Key page: Server and User on Read &amp; Write, Node, Allocation and Egg on Read, the rest on None" width="1080" height="850" loading="lazy">
+    <figcaption>Five permissions for the Application API key.</figcaption>
+  </figure>
+
+  <h2>Differences from the Pterodactyl extension</h2>
+  <div class="table">
+    <table>
+      <tr><th></th><th>Paymenter's Pterodactyl extension (1.5.9)</th><th>This extension on Pelican</th></tr>
+      <tr><td>Eggs</td><td>Nest, then egg</td><td>Eggs directly, optional egg tag filter</td></tr>
+      <tr><td>Where servers go</td><td>Locations, or a node</td><td>Node tags, or a node</td></tr>
+      <tr><td>The server's port</td><td>Pterodactyl's automatic deployment picks one</td><td>The extension picks one</td></tr>
+      <tr><td>Egg variables</td><td>Config options named after the variable</td><td>The same, plus a field per variable on the product page</td></tr>
+      <tr><td>Customer's account</td><td>The first result of the panel's email filter</td><td>The account with exactly that email address, on any page</td></tr>
+      <tr><td>API key</td><td><code>ptla_…</code></td><td><code>papp_…</code>, permissions Server, User, Node, Allocation, Egg</td></tr>
+    </table>
+  </div>
+  <p>Products cannot be moved from the Pterodactyl extension as they are: set the egg and the node tags on each product again.</p>
+
+  <h2>Troubleshooting</h2>
+  <div class="table">
+    <table>
+      <tr><th>Message</th><th>What to do</th></tr>
+      <tr><td><code>HTTP 401 ... The API key was not accepted</code></td><td>Copy the whole key again. Use an Application API key (Admin → Advanced → API Keys), not a key from your account page.</td></tr>
+      <tr><td><code>HTTP 403 ... The API key needs "Read" for Allocation</code></td><td>Create a key with the permissions above. Pelican cannot change the permissions of an existing key.</td></tr>
+      <tr><td><code>No node can take this server</code></td><td>No node with Use for Deployments on has the free memory, disk and CPU, or none has one of the product's node tags.</td></tr>
+      <tr><td>Go to server shows 404</td><td>The browser is signed in to Pelican as a user who does not own the server.</td></tr>
+    </table>
+  </div>
+  <p>Every message, product field, uninstalling and what was tested: <a href="https://github.com/ziroxonline111/paymenter-pelican#readme">README on GitHub</a>.</p>
+
+  <h2>Trials for your Pelican servers</h2>
+  <p><strong>Free Trials for Paymenter</strong> lets people try a server before they buy it: one trial per person, a reminder before it ends, suspend and terminate afterwards, and an <em>Upgrade and keep my server</em> button. It works with any Paymenter server extension that supports suspend, unsuspend and terminate (and upgrade, when the trial converts to another product); it was tested with the Pterodactyl 2.0 server extension.</p>
+  <div class="buttons"><a class="button secondary" href="https://karelialabs.gumroad.com/l/free-trials-paymenter">Get Free Trials ($12.99)</a></div>
+
+  <h2>FAQ</h2>
+  <div class="card">
+    <p><strong>Does the customer get a Pelican password?</strong><br>If the account is new, Pelican emails a link to set one (Pelican needs working mail settings). Existing accounts with the same email address are used as they are.</p>
+    <p><strong>Why does Go to server show 404 in Pelican?</strong><br>The browser is signed in to Pelican as someone who does not own the server; Pelican answers 404 for other users' servers. Sign out or sign in as the customer.</p>
+    <p><strong>Can customers choose the memory or a game version?</strong><br>Yes, with Paymenter config options whose environment variable is <code>memory</code> (or another product setting) or the egg variable's name, such as <code>MINECRAFT_VERSION</code>.</p>
+    <p><strong>Does it reinstall a server on upgrade?</strong><br>No. It changes the resources of the same server. A product with another egg moves the server to that egg; Pelican does not reinstall it by itself.</p>
+    <p><strong>Does it work with Pterodactyl?</strong><br>Use Paymenter's Pterodactyl extension for Pterodactyl 1.x. This one is for Pelican.</p>
+  </div>
+
+  <p>More about this extension: <a href="https://karelialabs.com/tools/pelican-panel-for-paymenter">karelialabs.com</a>. More tools from the same team: <a href="https://karelialabs.com/tools">karelialabs.com/tools</a>.</p>
+
+  <footer>© 2026 <a href="https://karelialabs.com">Karelia Labs</a> · MIT License · Based on Paymenter's built-in Pterodactyl extension (MIT) · Not affiliated with Paymenter or Pelican.</footer>
+</main>
+</body>
+</html>
